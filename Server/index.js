@@ -105,7 +105,9 @@ app.get('/faculties/add', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully added faculty")
         }
     })
@@ -119,7 +121,9 @@ app.get('/admin/student', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -133,7 +137,9 @@ app.get('/admin/faculty', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -147,7 +153,9 @@ app.get('/admin/course', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -161,7 +169,9 @@ app.get('/admin/course', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -176,7 +186,9 @@ app.get('/student/home', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -191,7 +203,9 @@ app.get('/faculty/home', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("Success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully retrieved the count")
         }
     })
@@ -207,7 +221,9 @@ app.get('/courses/add', (req, res) => {
             console.log(err)
         }
         else {
-            res.send("success")
+            return res.json({
+                data: results
+            })
             console.log("Successfully added course")
         }
     })
