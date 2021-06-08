@@ -30,6 +30,8 @@ app.get('/students', (req, res) => {
     })
 })
 
+
+
 app.post('/msg/post',(req,res)=>{console.log(req.body)
 doc = (req.body.doc === null ? null : `'${req.body.doc}'`)
     const INSERT_MSG_QUERY = `INSERT INTO msg values (${0},'${req.body.sid}','${req.body.fid}','${req.body.msg}',${0},${doc},'${req.body.date}')`
@@ -105,6 +107,92 @@ app.get('/faculties/add', (req, res) => {
         else {
             res.send("Success")
             console.log("Successfully added faculty")
+        }
+    })
+})
+
+app.get('/admin/student', (req, res) => {
+    const ADMIN_QUERY1 = `SELECT count(student.id) from student`
+    connection.query(ADMIN_QUERY1, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/admin/faculty', (req, res) => {
+    const ADMIN_QUERY2 = `SELECT count(faculty.id) from faculty`
+    connection.query(ADMIN_QUERY2, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/admin/course', (req, res) => {
+    const ADMIN_QUERY3 = `SELECT count(course.id) from course`
+    connection.query(ADMIN_QUERY3, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/admin/course', (req, res) => {
+    const ADMIN_QUERY3 = `SELECT count(MsgId) from msg wher ack=0`
+    connection.query(ADMIN_QUERY3, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/student/home', (req, res) => {
+    var {sid} = req.query;
+    const STUDENT_HOME = `SELECT S_Name from student where id like '${sid}'`
+    connection.query(STUDENT_HOME, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/faculty/home', (req, res) => {
+    var {fid} = req.query;
+    const FACULTY_HOME = `SELECT F_Name from faculty where id like '${fid}'`
+    connection.query(FACULTY_HOME, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            res.send("Success")
+            console.log("Successfully retrieved the count")
         }
     })
 })
