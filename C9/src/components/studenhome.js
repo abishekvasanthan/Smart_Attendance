@@ -1,5 +1,6 @@
 import '../index.css'
 import Navbar from './user-navbar';
+import * as React from 'react'
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +13,17 @@ import {useParams} from 'react-router-dom'
 
 const StudentHome = () => {
   var {id}=useParams()
+  const [name,setName]=React.useState('')
+
+  React.useEffect(()=>{
+    fetch(`http://localhost:4000/student/home?sid=${id}`)
+            .then(response => response.json())
+            .then(response => setName(response.data))
+            .catch(err => console.error(err))
+
+            
+  },[])
+
     const preventDefault=(e)=>{
         e.preventDefault();
         window.location=`/attendance/${id}`
@@ -53,7 +65,7 @@ const StudentHome = () => {
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
       <Navbar message="student" />
       <Grid container spacing={3}>
-      <Grid item xs={12} >
+      {/* <Grid item xs={12} >
               <Paper className={classes.paper}>
                 <Typography variant="h4" style={{ fontFamily: 'cursive',color:'firebrick' ,marginTop: '7%',fontWeight:'bolder' }} className={classes.title}>
                 “Success isn’t always about greatness. It’s about consistency. Consistent hard work leads to success. Greatness will come.”
@@ -62,22 +74,43 @@ const StudentHome = () => {
            – Dwayne Johnson
           </Typography>
           </Paper>
-          </Grid>
+          </Grid> */}
     </Grid>
-    <Grid container justify="space-around" spacing={8}>
-  <Grid item xs={12} >
-  </Grid>
-</Grid>
-    <Grid container spacing={10}>
-      <Grid item xs={6} spacing={24} >
-        <Paper className={classes.paper}>
-          <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black', marginTop: '7%',fontWeight:'bolder',fontSize:'250%' }} className={classes.title}>
-          Welcome :) 
+    
+<div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'90vh',}}>
+    <Grid style={{width:'85vw'}} container spacing={10}>
+      <Grid item xs={12} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content'}}>
+          <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>
+          {name&&(`Welcome ${name[0].S_Name} :)`)} 
           </Typography>
         </Paper>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+            <Link href="https://intranet.cb.amrita.edu/TimeTable/" style={{fontFamily:'Kosugi Maru'}} ><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>View my Timetable</Typography></Link>
+            
+        </Paper>
+      </Grid>
+
+      <Grid item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+        
+            <Link href="#" style={{fontFamily:'Kosugi Maru'}} onClick={preventDefault}><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>View my Attendance</Typography></Link>
+            
+        </Paper>
+      </Grid>
+
+      <Grid item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+        
+            <Link href="" onClick={preventDefault1}><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>Messages</Typography></Link>
+            
+        </Paper>
+      </Grid>
+
+      {/* <Grid item xs={6}>
         <Paper className={classes.paper}>
             <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black',  marginBottom: '7%',fontWeight:'bolder',fontSize:'250%' }} className={classes.title}>
             <Link href="https://intranet.cb.amrita.edu/TimeTable/" style={{fontFamily:'Kosugi Maru'}} >View my Timetable</Link>
@@ -89,9 +122,10 @@ const StudentHome = () => {
             <Link href="" style={{fontFamily:'Kosugi Maru'}} onClick={preventDefault1}>Messages</Link>
             </Typography>
         </Paper>
-      </Grid>
+      </Grid> */}
 
       </Grid>
+      </div>
      </div>
      );
 }

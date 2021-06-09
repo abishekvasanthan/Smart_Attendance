@@ -23,7 +23,7 @@ const StudentAdd = ({setFunc}) => {
     const [sem, setSem] = React.useState(1)
    
     const submitHandler=(e)=>{
-        //  e.preventDefault();
+         e.preventDefault();
         // alert("Successfully added!");
         fetch(`http://localhost:4000/students/add?id=${id}&name=${name}&username=${username}&password=${pass}&elective=${elective}&department=${dept}&section=${sec}&semester=${sem}`)
         .then(response=>response.json())

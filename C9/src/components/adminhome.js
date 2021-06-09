@@ -61,7 +61,7 @@ const AdminHome = () => {
   return (
     
     <div>
-      {console.log(students)}
+      
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
       <Navbar setFunc={functionalityHandler} />
 
@@ -86,7 +86,7 @@ const AdminHome = () => {
                   Students Enrolled
           </Typography>
                 <Typography variant="h5" style={{ fontFamily: 'Kosugi Maru', color: 'black', marginTop: '7%' }} className={classes.titleNumber}>
-                  {students}
+                  
           </Typography>
               </Paper>
             </Grid>

@@ -15,6 +15,8 @@ const connection = mysql.createConnection({
     database: process.env.DB_DATABASE,
 })
 
+
+
 const SELECT_ALL_STUDENTS_QUERY = 'SELECT * FROM student';
 app.get('/', (req, res) => { res.send("Hello from server") });
 app.get('/students', (req, res) => {
@@ -207,6 +209,39 @@ app.get('/faculty/home', (req, res) => {
                 data: results
             })
             console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/faculty/home/graph', (req, res) => {
+    var {fid} = req.query;
+    const FACULTY_HOME = `select CId,avg(percent) as av from (select CId,FId,class_attended*100/Total_classes as percent from attendance) as att where att.FId like '${fid}' group by att.CId`
+    connection.query(FACULTY_HOME, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            return res.json({
+                data: results
+            })
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
+app.get('/faculty/stats', (req, res) => {
+    const FACULTY_STATS = `select Ack,count(*) as cnt from msg group by Ack order by Ack`
+    connection.query(FACULTY_STATS, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
         }
     })
 })
