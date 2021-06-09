@@ -114,7 +114,7 @@ app.get('/faculties/add', (req, res) => {
 })
 
 app.get('/admin/student', (req, res) => {
-    const ADMIN_QUERY1 = `SELECT count(student.id) from student`
+    const ADMIN_QUERY1 = `SELECT count(student.id) as ct from student`
     connection.query(ADMIN_QUERY1, (err, results) => {
         if (err) {
             // return res.send(err)
@@ -130,7 +130,7 @@ app.get('/admin/student', (req, res) => {
 })
 
 app.get('/admin/faculty', (req, res) => {
-    const ADMIN_QUERY2 = `SELECT count(faculty.id) from faculty`
+    const ADMIN_QUERY2 = `SELECT count(faculty.id) as ct from faculty`
     connection.query(ADMIN_QUERY2, (err, results) => {
         if (err) {
             // return res.send(err)
@@ -146,7 +146,7 @@ app.get('/admin/faculty', (req, res) => {
 })
 
 app.get('/admin/course', (req, res) => {
-    const ADMIN_QUERY3 = `SELECT count(course.id) from course`
+    const ADMIN_QUERY3 = `SELECT count(course.id) as ct from course`
     connection.query(ADMIN_QUERY3, (err, results) => {
         if (err) {
             // return res.send(err)
@@ -161,8 +161,8 @@ app.get('/admin/course', (req, res) => {
     })
 })
 
-app.get('/admin/course', (req, res) => {
-    const ADMIN_QUERY3 = `SELECT count(MsgId) from msg wher ack=0`
+app.get('/admin/msg', (req, res) => {
+    const ADMIN_QUERY3 = `SELECT count(MsgId) as ct from msg where ack=0`
     connection.query(ADMIN_QUERY3, (err, results) => {
         if (err) {
             // return res.send(err)
@@ -598,6 +598,38 @@ app.get('/students/viewattendance', (req, res) => {
     var { sid, sem } = req.query;
     const STUDENT_VIEW_ATTENDANCE = `select course.id,course.C_Name,attendance.Class_attended,attendance.Total_classes,attendance.Class_attended*100/Total_classes as percent from course,attendance where attendance.SId='${sid}' and course.C_Sem=${sem} and attendance.CId= course.id`
     connection.query(STUDENT_VIEW_ATTENDANCE, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
+
+app.get('/admin/stats', (req, res) => {
+    const ADMIN_STATS = `select CId,avg(Class_attended*100/Total_classes)as av from attendance group by CId`
+    connection.query(ADMIN_STATS, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
+
+app.get('/faculty/stats', (req, res) => {
+    const FACULTY_STATS = `select count(*) from msg group by Ack`
+    connection.query(FACULTY_STATS, (err, results) => {
         if (err) {
             // return res.send(err)
             console.log(err)
