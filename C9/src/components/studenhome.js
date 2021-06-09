@@ -80,30 +80,30 @@ const StudentHome = () => {
 <div style={{display:'flex',justifyContent:'center',alignItems:'center',height:'90vh',}}>
     <Grid style={{width:'85vw'}} container spacing={10}>
       <Grid item xs={12} spacing={24} >
-        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content'}}>
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
           <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>
           {name&&(`Welcome ${name[0].S_Name} :)`)} 
           </Typography>
         </Paper>
       </Grid>
 
-      <Grid item xs={4} spacing={24} >
-        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+      <Grid style={{display:'flex',justifyContent:'center',alignItems:'center'}} item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20vw',background:'rgb(60,60,60)'}}>
             <Link href="https://intranet.cb.amrita.edu/TimeTable/" style={{fontFamily:'Kosugi Maru'}} ><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>View my Timetable</Typography></Link>
             
         </Paper>
       </Grid>
 
-      <Grid item xs={4} spacing={24} >
-        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+      <Grid style={{display:'flex',justifyContent:'center',alignItems:'center'}} item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20vw',background:'rgb(60,60,60)'}}>
         
             <Link href="#" style={{fontFamily:'Kosugi Maru'}} onClick={preventDefault}><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>View my Attendance</Typography></Link>
             
         </Paper>
       </Grid>
 
-      <Grid item xs={4} spacing={24} >
-        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'fit-content',background:'rgb(60,60,60)'}}>
+      <Grid style={{display:'flex',justifyContent:'center',alignItems:'center'}} item xs={4} spacing={24} >
+        <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center',width:'20vw',background:'rgb(60,60,60)'}}>
         
             <Link href="" onClick={preventDefault1}><Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'white',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>Messages</Typography></Link>
             
