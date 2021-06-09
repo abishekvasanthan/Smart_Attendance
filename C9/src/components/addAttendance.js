@@ -144,7 +144,7 @@ const AddAttendance = ({ setFunc }) => {
   return (
 
     <div>
-      <Navbar message="faculty" />
+      <Navbar message={"faculty"} fid={id} />
       <form onSubmit={handler} className="Add-form">
         <Button type="submit" class="btn btn-primary" variant="contained" color="primary" disableElevation style={{ height: '100%', marginLeft: '2%', backgroundColor: 'rgb(60,60,60)', marginTop: '2%', fontFamily: 'Kosugi Maru' }}>Go Back</Button>
       </form>

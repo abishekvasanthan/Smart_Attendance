@@ -205,10 +205,10 @@ app.get('/faculty/home', (req, res) => {
             console.log(err)
         }
         else {
+            console.log("Successfully displayed the content")
             return res.json({
                 data: results
             })
-            console.log("Successfully retrieved the count")
         }
     })
 })
@@ -662,21 +662,7 @@ app.get('/admin/stats', (req, res) => {
     })
 })
 
-app.get('/faculty/stats', (req, res) => {
-    const FACULTY_STATS = `select count(*) from msg group by Ack`
-    connection.query(FACULTY_STATS, (err, results) => {
-        if (err) {
-            // return res.send(err)
-            console.log(err)
-        }
-        else {
-            console.log(results)
-            return res.json({
-                data: results
-            })
-        }
-    })
-})
+
 
 app.get('/faculties/updateclassesattended', (req, res) => {
     var { sid, fid, cid } = req.query;

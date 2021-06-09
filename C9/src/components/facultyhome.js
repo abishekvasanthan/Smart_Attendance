@@ -1,5 +1,6 @@
 import '../index.css'
 import Navbar from './user-navbar';
+import {useHistory} from 'react-router'
 import * as React from 'react';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,10 +17,14 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
 
 
 const FacultyHome = () => {
-  var { id } = useParams()
+  var {id}  = useParams()
+  const history=useHistory()
   const [graph, setGraph] = React.useState([])
   const [data, setData] = React.useState([['Course', 'Avg(Attendance)']])
   const [data1, setData1] = React.useState([])
+  const [fn, setFn] = React.useState()
+
+
   React.useEffect(() => {
     async function fn() {
       const response = await fetch(`http://localhost:4000/faculty/home/graph?fid=${id}`)
@@ -27,12 +32,14 @@ const FacultyHome = () => {
       const arr = [['Course', 'Avg(Attendance)']]
       for (var i = 0; i < json.data.length; i++) {
         arr.push([json.data[i].CId, json.data[i].av])
-
       }
       setData(arr)
-
-
     }
+
+    fetch(`http://localhost:4000/faculty/home?fid=${id}`)
+          .then(response=>response.json())
+          .then(response=>setFn(response.data))
+          .catch(err=>console.error(err))
 
     async function fn1() {
       const response = await fetch(`http://localhost:4000/faculty/stats`)
@@ -54,7 +61,6 @@ const FacultyHome = () => {
         arr = [['Discrepancy Status', 'Count'], ['Unacknowledged', json.data[0].cnt], ['Acknowledged', json.data[1].cnt]]
       }
       setData1(arr)
-      console.log(json.data.length)
       // for(var i=0;i<json.data.length;i++){
       //   arr.push([json.data[i].CId,json.data[i].av])
 
@@ -74,12 +80,16 @@ const FacultyHome = () => {
 
   const preventDefault = (e) => {
     e.preventDefault();
-    window.location = `/add-attendance/${id}`
+    // window.location = `/add-attendance/${id}`
+    
+
+    history.push(`/add-attendance/${id}`)
   }
 
   const preventDefault1 = (e) => {
     e.preventDefault();
-    window.location = `/faculty/${id}/msg`
+    // window.location = `/faculty/${id}/msg`
+    history.push(`/faculty/${id}/msg`)
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -113,9 +123,9 @@ const FacultyHome = () => {
 
   return (
     <div>
-      {console.log(data1)}
+      {console.log(id)}
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
-      <Navbar message="faculty" />
+      <Navbar message={"faculty"} fid={id}/>
       <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
       <Grid style={{height:'fit-content',width:'80vw'}} container spacing={3}>
         <Grid style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'4vh'}} item xs={8} >
@@ -159,7 +169,7 @@ const FacultyHome = () => {
           <Grid item xs={12} spacing={24} >
             <Paper onClick={() => { graph.map((g) => { console.log(g.av) }) }} className={classes.paper}>
               <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black', fontWeight: 'bolder', fontSize: '2em' }} className={classes.title}>
-                Welcome Faculty :)
+              {fn&&(`Welcome ${id}, ${fn[0].F_Name}`)} 
             </Typography>
             </Paper>
           </Grid>

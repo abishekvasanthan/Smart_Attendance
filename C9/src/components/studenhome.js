@@ -82,7 +82,7 @@ const StudentHome = () => {
       <Grid item xs={12} spacing={24} >
         <Paper className={classes.paper} style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
           <Typography variant="h3" style={{ fontFamily: 'Kosugi Maru', color: 'black',fontWeight:'bolder',fontSize:'2em' }} className={classes.title}>
-          {name&&(`Welcome ${name[0].S_Name} :)`)} 
+          {name&&(`Welcome ${name[0].S_Name} :)`)}      
           </Typography>
         </Paper>
       </Grid>
