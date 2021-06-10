@@ -51,13 +51,14 @@ const AdminAdd = ({setFunc}) => {
             </form>
      <form className="Add-form">
          <h4 className="form-header">Add Course</h4>
+         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
          <div className="form-group">
                 <label className="login-form-label">Course Id</label>
-                <input type="text" className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="CourseId"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="CourseId"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Course Name</label>
-                <input type="text" className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Course Name"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Course Name"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Semester</label>
@@ -80,9 +81,11 @@ const AdminAdd = ({setFunc}) => {
              </select>
              
             </div>
+            </div>
             <Button type="submit" onClick={submitHandler} class="btn btn-primary" variant="contained" color="primary" disableElevation style={{height:'100%', marginLeft:'47%', backgroundColor:'rgb(60,60,60)',fontFamily:'Kosugi Maru'}}>Submit</Button>
+            
             </form>
-
+            
     </div>
       );
 }
