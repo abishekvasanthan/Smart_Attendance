@@ -63,7 +63,7 @@ const StudentHome = () => {
     return ( 
      <div>
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
-      <Navbar message="student" />
+      <Navbar message="student" fid={id} />
       <Grid container spacing={3}>
       {/* <Grid item xs={12} >
               <Paper className={classes.paper}>
