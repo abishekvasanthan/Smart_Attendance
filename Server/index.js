@@ -246,6 +246,22 @@ app.get('/faculty/stats', (req, res) => {
     })
 })
 
+app.get('/faculty/stats', (req, res) => {
+    const FACULTY_STATS = `select Ack,count(*) as cnt from msg group by Ack order by Ack`
+    connection.query(FACULTY_STATS, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
+
 app.get('/courses/add', (req, res) => {
     var { id, name, semester, type } = req.query;
     const INSERT_COURSE_QUERY = `INSERT INTO course values ('${id}','${name}','${semester}','${type}')`
