@@ -60,25 +60,27 @@ const FacultyAdd = ({setFunc}) => {
             </form>
      <form className="Add-form">
          <h4 className="form-header">Add Faculty</h4>
+         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
          <div className="form-group">
                 <label className="login-form-label">Facuty Id</label>
-                <input type="text" className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="Facuty Id"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="Facuty Id"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Faculty Name</label>
-                <input type="text" className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Faculty Name"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Faculty Name"></input>
             </div>          
             <div className="form-group">
                 <label className="login-form-label">Faculty Username</label>
-                <input type="text" className="form-control login-form-input" value={username} onChange={handleChangeUsername} placeholder="Faculty Username"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={username} onChange={handleChangeUsername} placeholder="Faculty Username"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Password</label>
-                <input type="text" className="form-control login-form-input" value={pass} onChange={handleChangePass} placeholder="Password"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={pass} onChange={handleChangePass} placeholder="Password"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Department</label>
-                <input type="text" className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="Department"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="Department"></input>
+            </div>
             </div>
             {/* <p>{id}</p>
             <p>{name}</p>

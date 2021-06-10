@@ -75,37 +75,38 @@ const StudentAdd = ({setFunc}) => {
             </form>
      <form  className="Add-form">
          <h4 className="form-header">Add Student</h4>
+         <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
          <div className="form-group">
                 <label className="login-form-label">Student Id</label>
-                <input type="text" className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="Eg.: CSE18001"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="Eg.: CSE18001"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Student Name</label>
-                <input type="text" className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Eg.: Abcdef Xyz"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Eg.: Abcdef Xyz"></input>
             </div>          
             <div className="form-group">
                 <label className="login-form-label">Student Username</label>
-                <input type="text" className="form-control login-form-input" value={username} onChange={handleChangeUsername} placeholder="Eg: abc123"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={username} onChange={handleChangeUsername} placeholder="Eg: abc123"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Password</label>
-                <input type="text" className="form-control login-form-input" value={pass} onChange={handleChangePass} placeholder="*****"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={pass} onChange={handleChangePass} placeholder="*****"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Elective</label>
-                <input type="text" className="form-control login-form-input" value={elective} onChange={handleChangeElective} placeholder="Eg.: 15HUM302"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={elective} onChange={handleChangeElective} placeholder="Eg.: 15HUM302"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Department</label>
-                <input type="text" className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="Eg.: CSE"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="Eg.: CSE"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Section</label>
-                <input type="text" className="form-control login-form-input" value={sec} onChange={handleChangeSec} placeholder="Eg.:A,B,C"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={sec} onChange={handleChangeSec} placeholder="Eg.:A,B,C"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Semester</label>
-                <select id = "myList" onChange={handleChangeSem} value={sem} className="form-control login-form-input">
+                <select id = "myList" style={{textAlign:'center'}} onChange={handleChangeSem} value={sem} className="form-control login-form-input">
                <option value = "1">1</option>
                <option value = "2">2</option>
                <option value = "3">3</option>
@@ -115,6 +116,7 @@ const StudentAdd = ({setFunc}) => {
                <option value = "7">7</option>
                <option value = "8">8</option>
              </select>
+            </div>
             </div>
             <Button onClick={submitHandler} type="submit" class="btn btn-primary" variant="contained" color="primary" disableElevation style={{height:'100%', marginLeft:'47%', backgroundColor:'rgb(60,60,60)', marginBottom:'5%', fontFamily:'Kosugi Maru'}}>Submit</Button>
      </form>
