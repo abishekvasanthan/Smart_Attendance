@@ -230,6 +230,23 @@ app.get('/faculty/home/graph', (req, res) => {
     })
 })
 
+app.get('/student/home/graph', (req, res) => {
+    var {fid} = req.query;
+    const FACULTY_HOME = `select CId,avg(percent) as av from (select CId,SId,class_attended*100/Total_classes as percent from attendance) as att where att.SId like '${fid}' group by att.CId`
+    connection.query(FACULTY_HOME, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            return res.json({
+                data: results
+            })
+            console.log("Successfully retrieved the count")
+        }
+    })
+})
+
 app.get('/faculty/stats', (req, res) => {
     const FACULTY_STATS = `select Ack,count(*) as cnt from msg group by Ack order by Ack`
     connection.query(FACULTY_STATS, (err, results) => {
