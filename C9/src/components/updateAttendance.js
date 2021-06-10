@@ -29,7 +29,7 @@ const UpdateAttendance = () => {
     return (
         <div>{console.log(date)}
             <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
-            <NavBar />
+            <NavBar message={"faculty"} fid={id} />
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '90vh', alignItems: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <label>Student ID</label>

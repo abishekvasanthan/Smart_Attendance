@@ -68,7 +68,7 @@ const Facultymsg = () => {
     return (
         <div>
             <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
-            <NavBar />
+            <NavBar message={"faculty"} fid={id}/>
             <h4 style={{ marginLeft: '4vw', marginTop: '5vh' }}><u>MESSAGE HISTORY</u></h4>
             <div>
             {!msgs&&(<div style={{display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center', justifyContent: 'center',marginTop:'10vh'}}><CircularProgress color="black" /></div>)}

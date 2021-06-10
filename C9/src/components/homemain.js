@@ -328,9 +328,9 @@ const Homemain = () => {
                 <Typography style={{ fontFamily: 'Kosugi Maru' }} className={classes.heading}>Faculty</Typography>
               </AccordionSummary>
             </Accordion>)}
-          <Typography className={classes.root}>
+          {/* <Typography className={classes.root}>
             <Link href="#" style={{ fontFamily: 'Kosugi Maru' }} onClick={preventDefault}>Forgot Password</Link>
-          </Typography>
+          </Typography> */}
         </animated.div>
       </Container>
     </animated.div>

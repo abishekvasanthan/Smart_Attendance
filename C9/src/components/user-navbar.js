@@ -9,7 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../fonts/KosugiMaru-Regular.ttf'
 import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
 
-const NavBar= (props) => {
+const NavBar= ({message,fid}) => {
     const useStyles = makeStyles((theme) => ({
         root: {
           flexGrow: 1,
@@ -31,11 +31,14 @@ const NavBar= (props) => {
       
   const classes = useStyles();
   
- 
-const user=props.message;
+  const [user, setUser] = React.useState(message) 
+const [Id, setId] = React.useState(fid)
+
+{console.log(message)
+  console.log(fid)}
 
     const handleMenuHome=()=>{
-      window.location='/'+user
+      window.location='/'+message+'/'+fid
     }
     const handleMenuExit=()=>{
       window.location='/logout'
@@ -61,12 +64,12 @@ const user=props.message;
                   <HomeIcon style={{color:"white"}}/>
                 
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 onClick={handleMenuChange}
                 color="inherit"
               >
                   <EnhancedEncryptionIcon style={{color:"white"}}/>
-              </IconButton>
+              </IconButton> */}
 
               <IconButton
                 onClick={handleMenuExit}
