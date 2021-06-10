@@ -113,12 +113,12 @@ const MenuAppBar= ({setFunc}) => {
                   <HomeIcon style={{color:"white"}}/>
                 
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 onClick={handleMenuChange}
                 color="inherit"
               >
                   <EnhancedEncryptionIcon style={{color:"white"}}/>
-              </IconButton>
+              </IconButton> */}
 
               <IconButton
                 onClick={handleMenuExit}
