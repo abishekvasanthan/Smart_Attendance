@@ -66,10 +66,14 @@ const NavBar = ({ message, fid }) => {
     window.location = '/logout'
   }
   const handleMenuChange = () => {
-    fetch(`http://34.136.140.158:4000/${message}/modifymail?id=${fid}&mail=${mail}`)
+    async function fn(){
+    await fetch(`http://34.136.140.158:4000/${message}/modifymail?id=${fid}&mail=${mail}`)
       .then(response => response.json())
       .catch(err => console.error(err))
+    // handleClose()  
   }
+  fn()
+}
 
   return (
     <div className={classes.root}>

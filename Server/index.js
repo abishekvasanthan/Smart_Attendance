@@ -140,7 +140,7 @@ app.get('/faculties', (req, res) => {
 
 app.get('/faculty/modifymail', (req, res) => {
     var {id,mail}=req.query;
-    const FACULTY_MODIFYMAIL = `'UPDATE f_email set email='${mail}' where id like '${id}'`;
+    const FACULTY_MODIFYMAIL = `UPDATE f_email set email='${mail}' where id like '${id}'`;
     connection.query(FACULTY_MODIFYMAIL, (err, results) => {
         if (err) {
             return res.send(err)
@@ -156,8 +156,8 @@ app.get('/faculty/modifymail', (req, res) => {
 
 app.get('/student/modifymail', (req, res) => {
     var {id,mail}=req.query;
-    const FACULTY_MODIFYMAIL = `'UPDATE s_email set email='${mail}' where id like '${id}'`;
-    connection.query(FACULTY_MODIFYMAIL, (err, results) => {
+    const STUDENT_MODIFYMAIL = `UPDATE s_email set email='${mail}' where id like '${id}'`;
+    connection.query(STUDENT_MODIFYMAIL, (err, results) => {
         if (err) {
             return res.send(err)
         }
