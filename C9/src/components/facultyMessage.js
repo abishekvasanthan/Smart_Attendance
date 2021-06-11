@@ -49,7 +49,7 @@ const Facultymsg = () => {
     const [msgs, setMsgs] = React.useState(null)
 
     async function getstudents() {
-        fetch(`http://localhost:4000/msgstudent/retrieve?fid=${id}`)
+        fetch(`http://34.136.140.158:4000/msgstudent/retrieve?fid=${id}`)
             .then(response => response.json())
             .then(response => setMsgs(response.data))
             .catch(err => console.error(err))
@@ -60,7 +60,7 @@ const Facultymsg = () => {
 
     const handleAck=(mid)=>{
         console.log(mid)
-        fetch(`http://localhost:4000/msg/ack?fid=${mid}`)
+        fetch(`http://34.136.140.158:4000/msg/ack?fid=${mid}`)
             .catch(err => console.error(err))
             window.location.reload()
     }

@@ -18,13 +18,13 @@ const StudentHome = () => {
   const [data, setData] = React.useState([['Course', 'Avg(Attendance)']])
 
   React.useEffect(() => {
-    fetch(`http://localhost:4000/student/home?sid=${id}`)
+    fetch(`http://34.136.140.158:4000/student/home?sid=${id}`)
       .then(response => response.json())
       .then(response => setName(response.data))
       .catch(err => console.error(err))
 
     async function fn() {
-      const response = await fetch(`http://localhost:4000/student/home/graph?fid=${id}`)
+      const response = await fetch(`http://34.136.140.158:4000/student/home/graph?fid=${id}`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)',{ role: 'style' }]]
       for (var i = 0; i < json.data.length; i++) {

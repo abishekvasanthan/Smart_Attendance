@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const AddAttendance = ({ setFunc }) => {
   const [courses, setCourses] = React.useState(null);
   async function getcourses() {
-    fetch("http://localhost:4000/courses")
+    fetch("http://34.136.140.158:4000/courses")
       .then(response => response.json())
       .then(response => setCourses(response.data))
       .catch(err => console.error(err))
@@ -82,7 +82,7 @@ const AddAttendance = ({ setFunc }) => {
       console.log(ob)
     }
     
-    fetch(`http://localhost:4000/faculties/retrieve?fid=${id}&cid=${cid}&sem=${sem}&sec=${sec}`)
+    fetch(`http://34.136.140.158:4000/faculties/retrieve?fid=${id}&cid=${cid}&sem=${sem}&sec=${sec}`)
     .then(response => response.json())
       .then(response =>{setStudents(response.data)})
       .catch(err => console.error(err))
@@ -99,13 +99,13 @@ const AddAttendance = ({ setFunc }) => {
     for (var key in state){
       if(state.hasOwnProperty(key)){
         if(state[key]==true){
-          fetch(`http://localhost:4000/faculties/updateclassesattended?sid=${key}&fid=${id}&cid=${cid}`)
+          fetch(`http://34.136.140.158:4000/faculties/updateclassesattended?sid=${key}&fid=${id}&cid=${cid}`)
           .then(response => response.json())
           .catch(err => console.error(err))
         }
       
     
-    fetch(`http://localhost:4000/faculties/updatetotalclasses?sid=${key}&fid=${id}&cid=${cid}`)
+    fetch(`http://34.136.140.158:4000/faculties/updatetotalclasses?sid=${key}&fid=${id}&cid=${cid}`)
           .then(response => response.json())
           .catch(err => console.error(err))
     // alert("Successfully Updated!");
@@ -115,12 +115,12 @@ const AddAttendance = ({ setFunc }) => {
   for (var key in state){
     if(state.hasOwnProperty(key)){
       if(state[key]==true){
-        fetch(`http://localhost:4000/faculties/adddate?sid=${key}&fid=${id}&cid=${cid}&date=${date}&clsattended=${1}`)
+        fetch(`http://34.136.140.158:4000/faculties/adddate?sid=${key}&fid=${id}&cid=${cid}&date=${date}&clsattended=${1}`)
         .then(response => response.json())
         .catch(err => console.error(err))
       }
       else{
-        fetch(`http://localhost:4000/faculties/adddate?sid=${key}&fid=${id}&cid=${cid}&date=${date}&clsattended=${0}`)
+        fetch(`http://34.136.140.158:4000/faculties/adddate?sid=${key}&fid=${id}&cid=${cid}&date=${date}&clsattended=${0}`)
         .then(response => response.json())
         .catch(err => console.error(err))
       }

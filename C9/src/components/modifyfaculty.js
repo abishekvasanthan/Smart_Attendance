@@ -47,7 +47,7 @@ const columns = [
 const Modifyfaculty = ({ Faculties }) => {
     const classes = useStyles();
     async function getstudents(){
-      fetch("http://localhost:4000/faculties")
+      fetch("http://34.136.140.158:4000/faculties")
       .then(response=>response.json())
       .then(response=>setFaculties(response.data))
       .catch(err=>console.error(err))
@@ -97,7 +97,7 @@ const Modifyfaculty = ({ Faculties }) => {
   };
 
   const submitHandler=(event)=>{
-    fetch(`http://localhost:4000/faculties/modify?id=${rno}&name=${name}&username=${uname}&password=${pass}&department=${dept}`)
+    fetch(`http://34.136.140.158:4000/faculties/modify?id=${rno}&name=${name}&username=${uname}&password=${pass}&department=${dept}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
 

@@ -63,7 +63,7 @@ const Studentmsg = () => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        fetch(`http://localhost:4000/msg/post`,
+        fetch(`http://34.136.140.158:4000/msg/post`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -95,11 +95,11 @@ const Studentmsg = () => {
     }
 
     async function getstudents() {
-        fetch(`http://localhost:4000/student/retrievemsg?sid=${id}`)
+        fetch(`http://34.136.140.158:4000/student/retrievemsg?sid=${id}`)
             .then(response => response.json())
             .then(response => setMsgs(response.data))
             .catch(err => console.error(err))
-        fetch(`http://localhost:4000/msgfaculty/retrieve?sid=${id}`)
+        fetch(`http://34.136.140.158:4000/msgfaculty/retrieve?sid=${id}`)
             .then(response => response.json())
             .then(response => setFaculty(response.data))
             .catch(err => console.error(err))

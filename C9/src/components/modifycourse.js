@@ -51,7 +51,7 @@ const columns = [
 const Modifycourse = ({ Courses }) => {
     const classes = useStyles();
     async function getstudents(){
-      fetch("http://localhost:4000/courses")
+      fetch("http://34.136.140.158:4000/courses")
       .then(response=>response.json())
       .then(response=>setCourses(response.data))
       .catch(err=>console.error(err))
@@ -95,7 +95,7 @@ const Modifycourse = ({ Courses }) => {
   };
 
   const submitHandler=(event)=>{
-    fetch(`http://localhost:4000/courses/modify?id=${id}&name=${name}&type=${type}&sem=${sem}`)
+    fetch(`http://34.136.140.158:4000/courses/modify?id=${id}&name=${name}&type=${type}&sem=${sem}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
     // console.log(rows)

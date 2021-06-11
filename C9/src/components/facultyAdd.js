@@ -22,7 +22,7 @@ const FacultyAdd = ({setFunc}) => {
     const submitHandler=(e)=>{
         e.preventDefault()
         console.log(id)
-        fetch(`http://localhost:4000/faculties/add?id=${id}&name=${name}&username=${username}&password=${pass}&department=${dept}`)
+        fetch(`http://34.136.140.158:4000/faculties/add?id=${id}&name=${name}&username=${username}&password=${pass}&department=${dept}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
         }

@@ -57,7 +57,7 @@ const columns = [
 const Modifystudent = ({ Students }) => {
     const classes = useStyles();
     async function getstudents(){
-      fetch("http://localhost:4000/students")
+      fetch("http://34.136.140.158:4000/students")
       .then(response=>response.json())
       .then(response=>setStudents(response.data))
       .catch(err=>console.error(err))
@@ -129,7 +129,7 @@ const Modifystudent = ({ Students }) => {
     
       //  e.preventDefault();
       // alert("Successfully added!");
-      fetch(`http://localhost:4000/students/modify?id=${rno}&name=${name}&username=${uname}&password=${pass}&elective=${elective}&department=${dept}&section=${section}&semester=${sem}`)
+      fetch(`http://34.136.140.158:4000/students/modify?id=${rno}&name=${name}&username=${uname}&password=${pass}&elective=${elective}&department=${dept}&section=${section}&semester=${sem}`)
       .then(response=>response.json())
       .catch(err=>console.error(err))
 

@@ -24,7 +24,7 @@ const CourseDelete = ({ Courses }) => {
 
     const [courses, setCourses] = React.useState(Courses);
     async function getcourses() {
-        fetch("http://localhost:4000/courses")
+        fetch("http://34.136.140.158:4000/courses")
             .then(response => response.json())
             .then(response => setCourses(response.data))
             .catch(err => console.error(err))
@@ -41,7 +41,7 @@ const CourseDelete = ({ Courses }) => {
     const handleDelete = () => {
         console.log(rowind) 
         console.log(rows[rowind].id)       
-        fetch(`http://localhost:4000/courses/delete?id=${rows[rowind].id}`)
+        fetch(`http://34.136.140.158:4000/courses/delete?id=${rows[rowind].id}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))   
     }

@@ -18,7 +18,7 @@ const columns = [
 const FacultyDelete = ({ Faculties }) => {
     const [faculties, setFaculties] = React.useState(Faculties);
         async function getfaculties(){
-          fetch("http://localhost:4000/faculties")
+          fetch("http://34.136.140.158:4000/faculties")
           .then(response=>response.json())
           .then(response=>setFaculties(response.data))
           .catch(err=>console.error(err))
@@ -37,7 +37,7 @@ const FacultyDelete = ({ Faculties }) => {
     const handleDelete=()=>{
         console.log(rowind) 
         console.log(rows[rowind].id)       
-        fetch(`http://localhost:4000/faculties/delete?id=${rows[rowind].id}`)
+        fetch(`http://34.136.140.158:4000/faculties/delete?id=${rows[rowind].id}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))   
     }

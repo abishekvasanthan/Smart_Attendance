@@ -41,7 +41,7 @@ const StudentAttendance = ({ setFunc }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:4000/students/viewattendance?sid=${id}&sem=${sem}`)
+        fetch(`http://34.136.140.158:4000/students/viewattendance?sid=${id}&sem=${sem}`)
             .then(response => response.json())
             .then(response => setVal(response.data))
             .catch(err => console.error(err))
@@ -51,7 +51,7 @@ const StudentAttendance = ({ setFunc }) => {
 
     const submitHandler1 = (e) => {
         e.preventDefault();
-        fetch(`http://localhost:4000/attend/retrieve?sid=${id}&cid=${course}`)
+        fetch(`http://34.136.140.158:4000/attend/retrieve?sid=${id}&cid=${course}`)
             .then(response => response.json())
             .then(response => setVal1(response.data))
             .catch(err => console.error(err))
@@ -70,7 +70,7 @@ const StudentAttendance = ({ setFunc }) => {
 
     const handleChangeSem1 = (e) => {
         setSem1(e.target.value)
-        // fetch(`http://localhost:4000/attend/retrievecourse?sid=${id}&sem=${sem1}`)
+        // fetch(`http://34.136.140.158:4000/attend/retrievecourse?sid=${id}&sem=${sem1}`)
         // .then(response=>response.json())
         // .then(response=>setCrsarray(response.data))
         // .catch(err=>console.error(err))
@@ -78,7 +78,7 @@ const StudentAttendance = ({ setFunc }) => {
     }
 
     const fn=(e)=>{
-        fetch(`http://localhost:4000/attend/retrievecourse?sid=${id}&sem=${sem1}`)
+        fetch(`http://34.136.140.158:4000/attend/retrievecourse?sid=${id}&sem=${sem1}`)
         .then(response=>response.json())
         .then(response=>setCrsarray(response.data))
         .catch(err=>console.error(err))
