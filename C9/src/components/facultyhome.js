@@ -38,7 +38,7 @@ const FacultyHome = () => {
 
     async function authfn() {
       if(local){
-      const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+      const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
       const json = await response.json()
       // console.log(json)
       var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -52,7 +52,7 @@ const FacultyHome = () => {
 
     }
 
-    fetch(`http://localhost:4000/faculty/home?fid=${id}`)
+    fetch(`http://34.136.140.158:4000/faculty/home?fid=${id}`)
           .then(response=>response.json())
           .then(response=>setFn(response.data))
           .catch(err=>console.error(err))

@@ -47,7 +47,7 @@ const AddAttendance = ({ setFunc }) => {
     getcourses()
     async function authfn() {
       if(local){
-      const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+      const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
       const json = await response.json()
       // console.log(json.data[0])
       var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -123,7 +123,7 @@ const AddAttendance = ({ setFunc }) => {
           .catch(err => console.error(err))
         }
         if(state[key]===false){
-          fetch(`http://localhost:4000/faculties/email?id=${key}&date=${date}&cid=${cid}`)
+          fetch(`http://34.136.140.158:4000/faculties/email?id=${key}&date=${date}&cid=${cid}`)
           // .then(response => response.json())
           .catch(err => console.error(err))
         }

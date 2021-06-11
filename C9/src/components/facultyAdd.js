@@ -27,7 +27,7 @@ const FacultyAdd = ({setFunc}) => {
         .then(response=>response.json())
         .catch(err=>console.error(err))
 
-        fetch(`http://localhost:4000/faculties/add/mail?id=${id}&mail=${mail}`)
+        fetch(`http://34.136.140.158:4000/faculties/add/mail?id=${id}&mail=${mail}`)
         // .then(response=>response.json())
         .catch(err=>console.error(err))
         }

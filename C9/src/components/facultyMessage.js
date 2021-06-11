@@ -63,7 +63,7 @@ const Facultymsg = () => {
         getstudents()
         async function authfn() {
             if(local){
-            const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+            const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
             const json = await response.json()
             // console.log(json.data[0])
             var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
