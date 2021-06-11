@@ -41,11 +41,11 @@ const UpdateAttendance = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch(`http://localhost:4000/updateattend/od?sid=${sid}&fid=${id}&cid=${cid}&date=${date}`)
+        fetch(`http://34.136.140.158:4000/updateattend/od?sid=${sid}&fid=${id}&cid=${cid}&date=${date}`)
             .then(response => response.json())
             .catch(err => console.error(err))
 
-        fetch(`http://localhost:4000/updateattendance/od?sid=${sid}&fid=${id}&cid=${cid}`)
+        fetch(`http://34.136.140.158:4000/updateattendance/od?sid=${sid}&fid=${id}&cid=${cid}`)
             .then(response => response.json())
             .catch(err => console.error(err))
     }

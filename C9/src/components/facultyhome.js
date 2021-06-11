@@ -27,7 +27,7 @@ const FacultyHome = () => {
 
   React.useEffect(() => {
     async function fn() {
-      const response = await fetch(`http://localhost:4000/faculty/home/graph?fid=${id}`)
+      const response = await fetch(`http://34.136.140.158:4000/faculty/home/graph?fid=${id}`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)']]
       for (var i = 0; i < json.data.length; i++) {
@@ -58,7 +58,7 @@ const FacultyHome = () => {
           .catch(err=>console.error(err))
 
     async function fn1() {
-      const response = await fetch(`http://localhost:4000/faculty/stats`)
+      const response = await fetch(`http://34.136.140.158:4000/faculty/stats`)
       const json = await response.json()
       var arr = []
       if (json.data.length === 1) {

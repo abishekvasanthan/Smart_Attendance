@@ -17,7 +17,7 @@ const AdminHome = () => {
 
     
     async function fn() {
-      const response = await fetch(`http://localhost:4000/admin/stats`)
+      const response = await fetch(`http://34.136.140.158:4000/admin/stats`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)']]
       for (var i = 0; i < json.data.length; i++) {
@@ -30,22 +30,22 @@ const AdminHome = () => {
     }
     fn()
 
-    fetch(`http://localhost:4000/admin/student`)
+    fetch(`http://34.136.140.158:4000/admin/student`)
       .then(response => response.json())
       .then(response => setStudents(response.data))
       .catch(err => console.error(err))
 
-    fetch(`http://localhost:4000/admin/faculty`)
+    fetch(`http://34.136.140.158:4000/admin/faculty`)
       .then(response => response.json())
       .then(response => setFaculty(response.data))
       .catch(err => console.error(err))
 
-    fetch(`http://localhost:4000/admin/course`)
+    fetch(`http://34.136.140.158:4000/admin/course`)
       .then(response => response.json())
       .then(response => setCourse(response.data))
       .catch(err => console.error(err))
 
-    fetch(`http://localhost:4000/admin/msg`)
+    fetch(`http://34.136.140.158:4000/admin/msg`)
       .then(response => response.json())
       .then(response => setMsg(response.data))
       .catch(err => console.error(err))

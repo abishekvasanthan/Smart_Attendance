@@ -27,7 +27,7 @@ const StudentAdd = ({setFunc}) => {
     const submitHandler=(e)=>{
          e.preventDefault();
         // alert("Successfully added!");
-        fetch(`http://localhost:4000/students/add?id=${id}&name=${name}&username=${username}&password=${pass}&elective=${elective}&department=${dept}&section=${sec}&semester=${sem}`)
+        fetch(`http://34.136.140.158:4000/students/add?id=${id}&name=${name}&username=${username}&password=${pass}&elective=${elective}&department=${dept}&section=${sec}&semester=${sem}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
 
