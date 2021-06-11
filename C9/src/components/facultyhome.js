@@ -61,7 +61,8 @@ const FacultyHome = () => {
       const response = await fetch(`http://34.136.140.158:4000/faculty/stats`)
       const json = await response.json()
       var arr = []
-      if (json.data.length === 1) {
+      if(json.data.length!==0){
+      if (json.data.length === 1){
         if (json.data[0].Ack === 0) {
           arr = [['Discrepancy Status', 'Count'], ['Unacknowledged', json.data[0].cnt], ['Acknowledged', 0]]
 
@@ -82,7 +83,7 @@ const FacultyHome = () => {
 
       // }
 
-
+    }
 
     }
     authfn()

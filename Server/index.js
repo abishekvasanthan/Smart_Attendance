@@ -138,6 +138,38 @@ app.get('/faculties', (req, res) => {
     })
 })
 
+app.get('/faculty/modifymail', (req, res) => {
+    var {id,mail}=req.query;
+    const FACULTY_MODIFYMAIL = `'UPDATE f_email set email='${mail}' where id like '${id}'`;
+    connection.query(FACULTY_MODIFYMAIL, (err, results) => {
+        if (err) {
+            return res.send(err)
+        }
+        else {
+            console.log("Modified faculty mail")
+            // return res.json({
+            //     data: results
+            // })
+        }
+    })
+})
+
+app.get('/student/modifymail', (req, res) => {
+    var {id,mail}=req.query;
+    const FACULTY_MODIFYMAIL = `'UPDATE s_email set email='${mail}' where id like '${id}'`;
+    connection.query(FACULTY_MODIFYMAIL, (err, results) => {
+        if (err) {
+            return res.send(err)
+        }
+        else {
+            console.log("Modified student mail")
+            // return res.json({
+            //     data: results
+            // })
+        }
+    })
+})
+
 const SELECT_ALL_COURSES_QUERY = 'SELECT * FROM course';
 app.get('/', (req, res) => { res.send("Hello from server") });
 app.get('/courses', (req, res) => {

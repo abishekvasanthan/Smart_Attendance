@@ -74,8 +74,7 @@ const Studentmsg = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ sid: id, msg: msg, doc: doc, fid: fid,date:date })
             })
-
-            window.location.reload()
+            .then(()=>(window.location.reload(true)))
     }
 
     const handleChangeMsg = (e) => {
@@ -184,6 +183,7 @@ const Studentmsg = () => {
                     </div>
                 </div> */}
                 </div>)}
+                {console.log(fid)}
             <div style={{ marginTop: '5vh', marginLeft: '4vw' }}>
                 <h4><u>SEND MESSAGE</u></h4>
                 <div style={{ display: 'flex', marginTop: '2vh', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

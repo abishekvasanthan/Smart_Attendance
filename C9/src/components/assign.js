@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ReactFontLoader from 'react-font-loader';
+import Swal from 'sweetalert2';
 
 
 const Assign = () => {
@@ -23,6 +24,13 @@ const Assign = () => {
         fetch(`http://34.136.140.158:4000/assign?fid=${fid}&cid=${cid}&dept=${dept}&sec=${sec}&sem=${sem}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Done'
+          })
         }
         
         const handler=(e)=>{
@@ -61,8 +69,8 @@ const Assign = () => {
          <h4 className="form-header">Assign Faculty</h4>
          <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
          <div className="form-group">
-                <label className="login-form-label">Facuty Id</label>
-                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={fid} onChange={handleChangeRno} placeholder="Facuty Id"></input>
+                <label className="login-form-label">Faculty Id</label>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={fid} onChange={handleChangeRno} placeholder="Faculty Id"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Course Id</label>

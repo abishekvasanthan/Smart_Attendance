@@ -16,6 +16,7 @@ import { useSpring, animated } from 'react-spring'
 import Link from '@material-ui/core/Link';
 var CryptoJS = require("crypto-js");
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',

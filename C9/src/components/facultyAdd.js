@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ReactFontLoader from 'react-font-loader';
 import * as React from 'react';
+import Swal from 'sweetalert2'
 
 
 
@@ -30,7 +31,15 @@ const FacultyAdd = ({setFunc}) => {
         fetch(`http://34.136.140.158:4000/faculties/add/mail?id=${id}&mail=${mail}`)
         // .then(response=>response.json())
         .catch(err=>console.error(err))
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Done'
+          })
         }
+        
         
         const handler=(e)=>{
             e.preventDefault();

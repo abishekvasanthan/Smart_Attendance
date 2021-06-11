@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ReactFontLoader from 'react-font-loader';
 import * as React from 'react';
+import Swal from 'sweetalert2';
 
 
 const AdminAdd = ({setFunc}) => {
@@ -18,10 +19,19 @@ const AdminAdd = ({setFunc}) => {
     const [type, setType] = React.useState('Elective')
    
     const submitHandler=(e)=>{
+        e.preventDefault()
         fetch(`http://34.136.140.158:4000/courses/add?id=${id}&name=${name}&semester=${sem}&type=${type}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Done'
+          })
         }
+        
     const handler=(e)=>{
         e.preventDefault();
         window.location='/admin/add'
