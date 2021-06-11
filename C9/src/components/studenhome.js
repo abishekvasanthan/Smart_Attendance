@@ -11,19 +11,41 @@ import Link from '@material-ui/core/Link';
 import { blueGrey } from '@material-ui/core/colors';
 import  Chart  from "react-google-charts";
 import { useParams } from 'react-router-dom'
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
+
 
 const StudentHome = () => {
   var { id } = useParams()
   const [name, setName] = React.useState('')
   const [data, setData] = React.useState([['Course', 'Avg(Attendance)']])
+  const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+  const [auth,setAuth]=React.useState(0)
+
 
   React.useEffect(() => {
+
     fetch(`http://localhost:4000/student/home?sid=${id}`)
       .then(response => response.json())
       .then(response => setName(response.data))
       .catch(err => console.error(err))
 
-    async function fn() {
+      async function authfn() {
+        if(local){
+        const response = await fetch(`http://localhost:4000/students/auth?id=${id}`)
+        const json = await response.json()
+        console.log(json.data[0])
+        var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+        var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        console.log(decr[0].pass===json.data[0].S_Password)
+        var v=decr[0].uname===json.data[0].S_Username&&decr[0].pass===json.data[0].S_Password?1:0
+        setAuth(v)}
+
+
+  
+      }
+
+      async function fn() {
       const response = await fetch(`http://localhost:4000/student/home/graph?fid=${id}`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)',{ role: 'style' }]]
@@ -34,6 +56,8 @@ const StudentHome = () => {
       setData(arr)
 
     }
+    authfn()
+
     fn()
 
   }, [])
@@ -75,7 +99,11 @@ const StudentHome = () => {
     setFunctionality(arg)
   }
   return (
-    <div>{console.log(data)}
+    <div>{
+      auth===0?(<div>
+        <NotAuth/>
+      </div>):
+    (<div>
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
       <Navbar message="student" fid={id} />
       <Grid container spacing={3}>
@@ -149,6 +177,7 @@ const StudentHome = () => {
 
         </Grid>
       </div>
+    </div>)}
     </div>
   );
 }

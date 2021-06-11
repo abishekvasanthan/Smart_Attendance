@@ -21,12 +21,18 @@ const StudentAdd = ({setFunc}) => {
     const [dept, setDept] = React.useState('')
     const [sec, setSec] = React.useState('')
     const [sem, setSem] = React.useState(1)
+    const [mail, setMail] = React.useState('')
+
    
     const submitHandler=(e)=>{
          e.preventDefault();
         // alert("Successfully added!");
         fetch(`http://localhost:4000/students/add?id=${id}&name=${name}&username=${username}&password=${pass}&elective=${elective}&department=${dept}&section=${sec}&semester=${sem}`)
         .then(response=>response.json())
+        .catch(err=>console.error(err))
+
+        fetch(`http://localhost:4000/students/add/mail?id=${id}&mail=${mail}`)
+        // .then(response=>response.json())
         .catch(err=>console.error(err))
         }
 
@@ -67,6 +73,10 @@ const StudentAdd = ({setFunc}) => {
         setSem(event.target.value);
     }
 
+    const handleChangeMail=(event)=>{
+        setMail(event.target.value);
+    }
+
     return (
     <div>
      <Navbar />
@@ -83,6 +93,10 @@ const StudentAdd = ({setFunc}) => {
             <div className="form-group">
                 <label className="login-form-label">Student Name</label>
                 <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Eg.: Abcdef Xyz"></input>
+            </div> 
+            <div className="form-group">
+                <label className="login-form-label">Student Email</label>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={mail} onChange={handleChangeMail} placeholder="abc@gmail.com"></input>
             </div>          
             <div className="form-group">
                 <label className="login-form-label">Student Username</label>

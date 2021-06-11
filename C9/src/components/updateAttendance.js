@@ -3,6 +3,8 @@ import ReactFontLoader from 'react-font-loader';
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField';
 import { useParams } from 'react-router-dom'
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
 
 const UpdateAttendance = () => {
 
@@ -10,6 +12,28 @@ const UpdateAttendance = () => {
     const [sid, setSId] = React.useState(null)
     const [cid, setCId] = React.useState(null)
     const [date, setDate] = React.useState(null)
+    const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+    const [auth,setAuth]=React.useState(0)
+
+    React.useEffect(() => {
+       
+        async function authfn() {
+          if(local){
+          const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+          const json = await response.json()
+          // console.log(json.data[0])
+          var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+          var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+          // console.log(decr[0].pass===json.data[0].S_Password)
+          var v=decr[0].uname===json.data[0].F_Username&&decr[0].pass===json.data[0].F_Password?1:0
+          setAuth(v)}
+    
+    
+    
+        }
+
+        authfn()
+    }, [])
 
     const onDateChange = (e) => {
         setDate(e.target.value)
@@ -27,7 +51,10 @@ const UpdateAttendance = () => {
     }
 
     return (
-        <div>{console.log(date)}
+        <div>{auth===0?(<div>
+            <NotAuth/>
+          </div>):
+        (<div>
             <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
             <NavBar message={"faculty"} fid={id} />
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '90vh', alignItems: 'center' }}>
@@ -54,6 +81,7 @@ const UpdateAttendance = () => {
                 </div>
                 <button type='submit' style={{ marginTop: '3vh', height: '5vh', width: '5vw', backgroundColor: 'rgb(60,60,60)', fontFamily: 'Kosugi Maru', border: '0', borderRadius: '4px', color: 'white' }}>Update</button>
             </form>
+        </div>)}
         </div>
 
     );

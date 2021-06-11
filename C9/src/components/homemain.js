@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import ReactFontLoader from 'react-font-loader';
 import { useSpring, animated } from 'react-spring'
 import Link from '@material-ui/core/Link';
+var CryptoJS = require("crypto-js");
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,10 @@ const Homemain = () => {
     e.preventDefault();
     if (uname === "admin" && pass === "admin") {
       setErrMsg("")
+      var data = [{ uname: `${uname}`, pass: `${pass}` }]
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'my-secret-key@123').toString();
+          // console.log(ciphertext);
+          localStorage.setItem('user', ciphertext);
       setAccord(0)
       window.location = '/admin'
 
@@ -118,7 +123,19 @@ const Homemain = () => {
         else {
           console.log('User signed in')
           setErrMsg('')
+          var data = [{ uname: `${uname}`, pass: `${pass}` }]
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'my-secret-key@123').toString();
+          // console.log(ciphertext);
+          localStorage.setItem('user', ciphertext);
           window.location = `/student/${response.data[0].id}`
+
+          // data=localStorage.getItem('user');
+          // var bytes = CryptoJS.AES.decrypt(data, 'my-secret-key@123');
+          // var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+          // console.log(decryptedData)
+
+  
+
         }
 
 
@@ -148,6 +165,10 @@ const Homemain = () => {
         else {
           console.log('User signed in')
           setErrMsg('')
+          var data = [{ uname: `${uname}`, pass: `${pass}` }]
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), 'my-secret-key@123').toString();
+          // console.log(ciphertext);
+          localStorage.setItem('user', ciphertext);
           window.location = `/faculty/${response.data[0].id}`
         }
 

@@ -24,6 +24,9 @@ import Assign from './assign';
 import Studentmsg from './studentmessage';
 import Facultymsg from './facultyMessage';
 import UpdateAttendance from './updateAttendance';
+import * as React from 'react'
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
 
 const Students=[
   {
@@ -121,7 +124,24 @@ const Courses=[
   }
 ]
 
+
+
 const HomeRoute = () => {
+  const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+  const [auth,setAuth]=React.useState(0)
+React.useEffect(()=>{
+  function authfn() {
+    if(local){
+    var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+    var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    var v=decr[0].uname==='admin'&&decr[0].pass==='admin'?1:0
+    setAuth(v)}
+
+
+
+  }
+authfn()
+},[])  
     return (
         <Router>
         <div className="content">
@@ -136,7 +156,7 @@ const HomeRoute = () => {
               <FacultyHome />
             </Route>
             <Route exact path="/admin">
-              <AdminHome />
+              {auth===1?<AdminHome />:<NotAuth/>}
             </Route>
             <Route exact path="/attendance/:id">
               <StudentAttendance />
@@ -145,16 +165,16 @@ const HomeRoute = () => {
               <AddAttendance />
             </Route>
             <Route exact path="/admin/add">
-              <AdminAdd />
+            {auth===1?<AdminAdd />:<NotAuth/>}
             </Route>
             <Route exact path="/admin/add/course">
-              <CourseAdd />
+            {auth===1?<CourseAdd />:<NotAuth/>}
             </Route>
             <Route exact path="/admin/add/faculty">
-              <FacultyAdd />
+            {auth===1?<FacultyAdd />:<NotAuth/>}
             </Route>
             <Route exact path="/admin/add/student">
-              <StudentAdd />
+            {auth===1?<StudentAdd />:<NotAuth/>}
             </Route>
             <Route exact path="/password">
               <Password />
@@ -166,31 +186,31 @@ const HomeRoute = () => {
               <Logout />
             </Route>
             <Route exact path="/admin/modify/student">
-              <Modifystudent Students={Students}/>
+            {auth===1?<Modifystudent Students={Students}/>:<NotAuth/>}
             </Route>
              <Route exact path="/admin/modify/faculty">
-              <Modifyfaculty Faculties={Faculties}/>
+              {auth===1?<Modifyfaculty Faculties={Faculties}/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/modify/course">
-              <Modifycourse Courses={Courses}/>
+              {auth===1?<Modifycourse Courses={Courses}/>:<NotAuth/>}
             </Route> 
             <Route exact path="/admin/modify">
-              <AdminModify/>
+              {auth===1?<AdminModify/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/delete">
-              <AdminDelete/>
+              {auth===1?<AdminDelete/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/delete/student">
-              <StudentDelete Students={Students}/>
+              {auth===1?<StudentDelete Students={Students}/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/delete/faculty">
-              <FacultyDelete Faculties={Faculties}/>
+              {auth===1?<FacultyDelete Faculties={Faculties}/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/delete/course">
-              <CourseDelete Courses={Courses}/>
+              {auth===1?<CourseDelete Courses={Courses}/>:<NotAuth/>}
             </Route>
             <Route exact path="/admin/assign">
-              <Assign Courses={Courses}/>
+              {auth===1?<Assign Courses={Courses}/>:<NotAuth/>}
             </Route>
             <Route exact path="/student/:id/msg">
               <Studentmsg/>

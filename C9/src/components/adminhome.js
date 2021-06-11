@@ -14,6 +14,8 @@ import React from 'react';
 const AdminHome = () => {
 
   useEffect(() => {
+
+    
     async function fn() {
       const response = await fetch(`http://localhost:4000/admin/stats`)
       const json = await response.json()

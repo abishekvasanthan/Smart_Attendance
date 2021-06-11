@@ -11,6 +11,9 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import reactDom from 'react-dom';
 import CheckIcon from '@material-ui/icons/Check';
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
+
 
 const HandleClassMiss=({x,y})=>{
     const [clas, setClas] = React.useState(null)
@@ -38,6 +41,27 @@ const StudentAttendance = ({ setFunc }) => {
     const [show1, setShow1] = React.useState(false)
     const [formshow, setFormShow] = React.useState(false)
     const [formshow1, setFormShow1] = React.useState(false)
+    const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+    const [auth,setAuth]=React.useState(0)
+
+    React.useEffect(()=>{
+        async function authfn() {
+            if(local){
+            const response = await fetch(`http://localhost:4000/students/auth?id=${id}`)
+            const json = await response.json()
+            console.log(json.data[0])
+            var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+            var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            console.log(decr[0].pass===json.data[0].S_Password)
+            var v=decr[0].uname===json.data[0].S_Username&&decr[0].pass===json.data[0].S_Password?1:0
+            setAuth(v)}
+    
+    
+      
+          }
+    authfn()
+
+    },[])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -101,7 +125,11 @@ const StudentAttendance = ({ setFunc }) => {
     }
 
     return (
-        <div>
+        <div>{
+            auth===0?(<div>
+              <NotAuth/>
+            </div>):
+        (<div>
             <Navbar message="student" fid={id}/>
             <form onSubmit={handler} className="Add-form">
                 <Button type="submit" class="btn btn-primary" variant="contained" color="primary" disableElevation style={{ height: '100%', marginLeft: '2%', backgroundColor: 'rgb(60,60,60)', marginTop: '2%', fontFamily: 'Kosugi Maru' }}>Go Back</Button>
@@ -221,6 +249,7 @@ const StudentAttendance = ({ setFunc }) => {
         
                 </div>}
             </div>
+        </div>)}
         </div>
     );
 }

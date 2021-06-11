@@ -59,6 +59,7 @@ const MenuAppBar= ({setFunc}) => {
       window.location='/admin'
     }
     const handleMenuExit=()=>{
+      localStorage.removeItem('user');
       window.location='/logout'
     }
     const handleMenuChange=()=>{

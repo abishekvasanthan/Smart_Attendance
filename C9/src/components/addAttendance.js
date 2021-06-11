@@ -15,6 +15,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useParams} from 'react-router-dom';
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
 
 
 
@@ -43,6 +45,21 @@ const AddAttendance = ({ setFunc }) => {
   }
   React.useEffect(() => {
     getcourses()
+    async function authfn() {
+      if(local){
+      const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+      const json = await response.json()
+      // console.log(json.data[0])
+      var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+      var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // console.log(decr[0].pass===json.data[0].S_Password)
+      var v=decr[0].uname===json.data[0].F_Username&&decr[0].pass===json.data[0].F_Password?1:0
+      setAuth(v)}
+
+
+
+    }
+  authfn()
   }, [])
   var {id}=useParams()
 
@@ -52,6 +69,8 @@ const AddAttendance = ({ setFunc }) => {
   const [students,setStudents]=React.useState("");
   const [showtable,setShowtable]=React.useState(0);
   const [date,setDate]=React.useState((new Date()).getFullYear()+'-'+'0'+((new Date()).getMonth()+1)+'-'+(new Date()).getDate());
+  const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+  const [auth,setAuth]=React.useState(0)
   // var x=students.map((student,index)=>{
     
   //     student.id:false,
@@ -98,9 +117,14 @@ const AddAttendance = ({ setFunc }) => {
     e.preventDefault();
     for (var key in state){
       if(state.hasOwnProperty(key)){
-        if(state[key]==true){
+        if(state[key]===true){
           fetch(`http://localhost:4000/faculties/updateclassesattended?sid=${key}&fid=${id}&cid=${cid}`)
           .then(response => response.json())
+          .catch(err => console.error(err))
+        }
+        if(state[key]===false){
+          fetch(`http://localhost:4000/faculties/email?id=${key}&date=${date}&cid=${cid}`)
+          // .then(response => response.json())
           .catch(err => console.error(err))
         }
       
@@ -142,8 +166,10 @@ const AddAttendance = ({ setFunc }) => {
 
 
   return (
-
-    <div>
+    <div>{auth===0?(<div>
+      <NotAuth/>
+    </div>):
+    (<div>
       <Navbar message={"faculty"} fid={id} />
       <form onSubmit={handler} className="Add-form">
         <Button type="submit" class="btn btn-primary" variant="contained" color="primary" disableElevation style={{ height: '100%', marginLeft: '2%', backgroundColor: 'rgb(60,60,60)', marginTop: '2%', fontFamily: 'Kosugi Maru' }}>Go Back</Button>
@@ -228,6 +254,7 @@ const AddAttendance = ({ setFunc }) => {
           <Button type="submit" class="btn btn-primary" variant="contained" color="primary" disableElevation style={{ height: '100%', marginLeft: '47%', marginTop: '2%', backgroundColor: 'rgb(60,60,60)', fontFamily: 'Kosugi Maru' }}>Update</Button>
         </div>)}
       </form>
+    </div>)}
     </div>
   );
 }

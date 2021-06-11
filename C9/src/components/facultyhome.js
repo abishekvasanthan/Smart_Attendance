@@ -10,11 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import ReactFontLoader from 'react-font-loader';
 import Link from '@material-ui/core/Link';
 import { Chart } from "react-google-charts";
-import { blueGrey } from '@material-ui/core/colors';
+import NotAuth from './notAvailable';
 import { useParams } from 'react-router-dom';
-import { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+var CryptoJS = require("crypto-js");
 
 const FacultyHome = () => {
   var {id}  = useParams()
@@ -23,6 +21,8 @@ const FacultyHome = () => {
   const [data, setData] = React.useState([['Course', 'Avg(Attendance)']])
   const [data1, setData1] = React.useState([])
   const [fn, setFn] = React.useState()
+  const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+  const [auth,setAuth]=React.useState(0)
 
 
   React.useEffect(() => {
@@ -34,6 +34,22 @@ const FacultyHome = () => {
         arr.push([json.data[i].CId, json.data[i].av])
       }
       setData(arr)
+    }
+
+    async function authfn() {
+      if(local){
+      const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+      const json = await response.json()
+      // console.log(json)
+      var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+      var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      // console.log(decr[0].pass===json.data[0].S_Password)
+      var v=decr[0].uname===json.data[0].F_Username&&decr[0].pass===json.data[0].F_Password?1:0
+      setAuth(v)
+    }
+
+
+
     }
 
     fetch(`http://localhost:4000/faculty/home?fid=${id}`)
@@ -69,6 +85,7 @@ const FacultyHome = () => {
 
 
     }
+    authfn()
     fn()
     fn1()
 
@@ -122,7 +139,11 @@ const FacultyHome = () => {
 
 
   return (
-    <div>
+    <div>{
+      auth===0?(<div>
+        <NotAuth/>
+      </div>):
+    (<div>
       {console.log(id)}
       <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
       <Navbar message={"faculty"} fid={id}/>
@@ -217,6 +238,7 @@ const FacultyHome = () => {
 
         </Grid>
       </div>
+    </div>)}
     </div>
   );
 }

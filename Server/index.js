@@ -2,12 +2,13 @@ require("dotenv").config()
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
-const bodyParser=require('body-parser')
+const bodyParser = require('body-parser')
 const app = express();
 app.use(cors());
+const nodemailer = require("nodemailer");
 
-app.use(bodyParser.json({limit: '10mb'}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USERNAME,
@@ -32,10 +33,46 @@ app.get('/students', (req, res) => {
     })
 })
 
+// const SELECT_ALL_STUDENTS_QUERY = 'SELECT S_Username,S_Password FROM student where id like ${id}';
+app.get('/students/auth', (req, res) => {
+    var {id} = req.query;
+    const SELECTSTUDENT_QUERY = `SELECT S_Username,S_Password FROM student where id like '${id}'`
+    connection.query(SELECTSTUDENT_QUERY, (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
+
+app.get('/faculties/auth', (req, res) => {
+    var {id} = req.query;
+    const SELECTSTUDENT_QUERY = `SELECT F_Username,F_Password FROM faculty where id like '${id}'`
+    connection.query(SELECTSTUDENT_QUERY, (err, results) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else {
+            console.log(results)
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
 
 
-app.post('/msg/post',(req,res)=>{console.log(req.body)
-doc = (req.body.doc === null ? null : `'${req.body.doc}'`)
+
+app.post('/msg/post', (req, res) => {
+    console.log(req.body)
+    doc = (req.body.doc === null ? null : `'${req.body.doc}'`)
     const INSERT_MSG_QUERY = `INSERT INTO msg values (${0},'${req.body.sid}','${req.body.fid}','${req.body.msg}',${0},${doc},'${req.body.date}')`
     // console.log(id, name, username, password, elective, department, section, semester)
     connection.query(INSERT_MSG_QUERY, (err, results) => {
@@ -44,6 +81,42 @@ doc = (req.body.doc === null ? null : `'${req.body.doc}'`)
             console.log(err)
         }
         else {
+            const SELECT_ALL_FACULTIES_QUERY1 = `SELECT email FROM f_email where id like '${req.body.fid}'`;
+            connection.query(SELECT_ALL_FACULTIES_QUERY1, (err, results) => {
+                if (err) {
+                    // return res.send(err)
+                    console.log(err)
+                }
+                else {
+                    console.log(results[0].email)
+                    let mailTransporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            user: 'c9smartattendance@gmail.com',
+                            pass: 'lostin2002'
+                        }
+                    });
+        
+                    let mailDetails = {
+                        from: 'c9smartattendance@gmail.com',
+                        to: `${results[0].email}`,
+                        subject: `[${req.body.date} - ${req.body.sid}] Discrepancy Alert!`,
+                        text: `${req.body.fid},\n\nYou have a new message from student (with roll no.) ${req.body.sid} regarding discrepancy in giving attendance.\nPlease check your message inbox in the Smart Attendence Portal for more details.\n\n\nRegards,\nSmart Attendance Manager\n\n\nNote: This is an auto-generated mail. Please do not send replies. Contact concerned staff or the department if any query.`
+                    };
+        
+                    mailTransporter.sendMail(mailDetails, function(err, data) {
+                        if(err) {
+                            console.log('Error Occurs');
+                        } else {
+                            console.log('Email sent successfully');
+                        }
+                    });
+                    // return res.json({
+                    //     data: results
+                    // })
+                }
+            })
+
             res.send("Success")
             console.log("Successfully added message")
         }
@@ -97,6 +170,25 @@ app.get('/students/add', (req, res) => {
     })
 })
 
+app.get('/students/add/mail', (req, res) => {
+    var { id,mail} = req.query;
+    const INSERT_FACULTY_QUERY2 = `INSERT INTO s_email values ('${id}','${mail}')`
+    // console.log(id, name, username, password, department)
+    connection.query(INSERT_FACULTY_QUERY2, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            // return res.json({
+            //     data: results
+            // })
+            console.log("Successfully added student mail")
+        }
+    })
+})
+
+
 app.get('/faculties/add', (req, res) => {
     var { id, name, username, password, department } = req.query;
     const INSERT_FACULTY_QUERY = `INSERT INTO faculty values ('${id}','${name}','${username}','${password}','${department}')`
@@ -107,10 +199,28 @@ app.get('/faculties/add', (req, res) => {
             console.log(err)
         }
         else {
-            return res.json({
-                data: results
-            })
+            // return res.json({
+            //     data: results
+            // })
             console.log("Successfully added faculty")
+        }
+    })
+})
+
+app.get('/faculties/add/mail', (req, res) => {
+    var { id,mail} = req.query;
+    const INSERT_FACULTY_QUERY2 = `INSERT INTO f_email values ('${id}','${mail}')`
+    // console.log(id, name, username, password, department)
+    connection.query(INSERT_FACULTY_QUERY2, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            // return res.json({
+            //     data: results
+            // })
+            console.log("Successfully added faculty mail")
         }
     })
 })
@@ -180,7 +290,7 @@ app.get('/admin/msg', (req, res) => {
 })
 
 app.get('/student/home', (req, res) => {
-    var {sid} = req.query;
+    var { sid } = req.query;
     const STUDENT_HOME = `SELECT S_Name from student where id like '${sid}'`
     connection.query(STUDENT_HOME, (err, results) => {
         if (err) {
@@ -197,7 +307,7 @@ app.get('/student/home', (req, res) => {
 })
 
 app.get('/faculty/home', (req, res) => {
-    var {fid} = req.query;
+    var { fid } = req.query;
     const FACULTY_HOME = `SELECT F_Name from faculty where id like '${fid}'`
     connection.query(FACULTY_HOME, (err, results) => {
         if (err) {
@@ -214,7 +324,7 @@ app.get('/faculty/home', (req, res) => {
 })
 
 app.get('/faculty/home/graph', (req, res) => {
-    var {fid} = req.query;
+    var { fid } = req.query;
     const FACULTY_HOME = `select CId,avg(percent) as av from (select CId,FId,class_attended*100/Total_classes as percent from attendance) as att where att.FId like '${fid}' group by att.CId`
     connection.query(FACULTY_HOME, (err, results) => {
         if (err) {
@@ -231,7 +341,7 @@ app.get('/faculty/home/graph', (req, res) => {
 })
 
 app.get('/student/home/graph', (req, res) => {
-    var {fid} = req.query;
+    var { fid } = req.query;
     const FACULTY_HOME = `select CId,avg(percent) as av from (select CId,SId,class_attended*100/Total_classes as percent from attendance) as att where att.SId like '${fid}' group by att.CId`
     connection.query(FACULTY_HOME, (err, results) => {
         if (err) {
@@ -398,7 +508,7 @@ app.get('/faculties/modify', (req, res) => {
 })
 
 app.get('/updateattendance/od', (req, res) => {
-    var { sid,fid,cid } = req.query;
+    var { sid, fid, cid } = req.query;
     const UPDATEATTENDANCE_OD = `UPDATE attendance SET Class_attended=Class_attended+1 where FId='${fid}' and SId='${sid}' and CId='${cid}'`
     connection.query(UPDATEATTENDANCE_OD, (err, results) => {
         if (err) {
@@ -413,7 +523,7 @@ app.get('/updateattendance/od', (req, res) => {
 })
 
 app.get('/updateattend/od', (req, res) => {
-    var { sid,fid,cid,date } = req.query;
+    var { sid, fid, cid, date } = req.query;
     const UPDATEATTEND_OD = `UPDATE attend SET Class_attended=1 where FId='${fid}' and SId='${sid}' and CId='${cid}' and Dt like '${date}'`
     connection.query(UPDATEATTEND_OD, (err, results) => {
         if (err) {
@@ -545,7 +655,7 @@ app.get('/faculties/retrieve', (req, res) => {
 })
 
 app.get('/attend/retrieve', (req, res) => {
-    var { sid,fid,cid } = req.query;
+    var { sid, fid, cid } = req.query;
     const ATTEND_RETRIEVE = `select Dt,Class_attended from attend where SId like '${sid}' and CId like '${cid}'`
     connection.query(ATTEND_RETRIEVE, (err, results) => {
         if (err) {
@@ -610,26 +720,27 @@ app.get('/msg/ack', (req, res) => {
 })
 
 app.get('/attend/retrievecourse', (req, res) => {
-    var {sid,sem} = req.query;
-    if(sem!==null){
-    const ATTEND_RETRIEVECOURSE = `select CId from attendance where SId like '${sid}' and CId in (Select id from course where C_Sem=${sem})`
-    connection.query(ATTEND_RETRIEVECOURSE, (err, results) => {
-        if (err) {
-            // return res.send(err)
-            console.log(err)
-        }
-        else {
-            console.log(results)
-            return res.json({
-                data: results
-            })
-        }
-    })
-}})
+    var { sid, sem } = req.query;
+    if (sem !== null) {
+        const ATTEND_RETRIEVECOURSE = `select CId from attendance where SId like '${sid}' and CId in (Select id from course where C_Sem=${sem})`
+        connection.query(ATTEND_RETRIEVECOURSE, (err, results) => {
+            if (err) {
+                // return res.send(err)
+                console.log(err)
+            }
+            else {
+                console.log(results)
+                return res.json({
+                    data: results
+                })
+            }
+        })
+    }
+})
 
 
 app.get('/student/retrievemsg', (req, res) => {
-    var {sid} = req.query;
+    var { sid } = req.query;
     const STUDENT_RETRIEVEMSG = `select faculty.F_Name,msg.Msg,msg.Dt,msg.Doc,msg.Ack from faculty,msg where msg.FId like faculty.id and msg.SId like '${sid}'`
     connection.query(STUDENT_RETRIEVEMSG, (err, results) => {
         if (err) {
@@ -646,8 +757,8 @@ app.get('/student/retrievemsg', (req, res) => {
 })
 
 app.get('/faculties/adddate', (req, res) => {
-    var { sid,fid ,cid, date,clsattended } = req.query;
-    const FACULTY_ADDDATE = `INSERT into attend values ('${sid}','${fid}','${cid}','${date}','${clsattended}')`
+    var { sid, fid, cid, date, clsattended } = req.query;
+    const FACULTY_ADDDATE = `INSERT into attend values (${0},'${sid}','${fid}','${cid}','${date}','${clsattended}')`
     connection.query(FACULTY_ADDDATE, (err, results) => {
         if (err) {
             // return res.send(err)
@@ -706,7 +817,7 @@ app.get('/faculties/updateclassesattended', (req, res) => {
             console.log(err)
         }
         else {
-            console.log(results)
+            // console.log(results)
             return res.json({
                 data: results
             })
@@ -723,12 +834,55 @@ app.get('/faculties/updatetotalclasses', (req, res) => {
             console.log(err)
         }
         else {
-            console.log(results)
+            // console.log(results)
             return res.json({
                 data: results
             })
         }
     })
 })
+
+app.get('/faculties/email', (req, res) => {
+    var { id,date,cid } = req.query;
+    const FACULTY_UPDATETOTAL = `select email from s_email where id like '${id}'`
+    connection.query(FACULTY_UPDATETOTAL, (err, results) => {
+        if (err) {
+            // return res.send(err)
+            console.log(err)
+        }
+        else {
+            console.log(results[0].email)
+            // var { sid, fid, cid } = req.query;
+            let mailTransporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'c9smartattendance@gmail.com',
+                    pass: 'lostin2002'
+                }
+            });
+
+            let mailDetails = {
+                from: 'c9smartattendance@gmail.com',
+                to: `${results[0].email}`,
+                subject: `Class Missed on ${date}`,
+                text: `${id},\n\nYou have been marked absent for your class (Course Code: ${cid}) on ${date}.\n\nDon't forget to catch up on the missed class :).\n\n\nPlease contact respective faculty if any discrepancy.\n\n\nRegards,\nSmart Attendance Manager\n\n\nNote: This is an auto-generated mail. Please do not send replies. Contact concerned faculty or the department if any query.`
+            };
+
+            mailTransporter.sendMail(mailDetails, function(err, data) {
+                if(err) {
+                    console.log('Error Occurs');
+                } else {
+                    console.log('Email sent successfully');
+                }
+            });
+            // return res.json({
+            //     data: results
+            // })
+        }
+    })
+
+})
+
+
 
 module.exports = app.listen(4000, () => { console.log("server listening on 4000") });

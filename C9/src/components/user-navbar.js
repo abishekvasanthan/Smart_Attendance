@@ -41,6 +41,7 @@ const [Id, setId] = React.useState(fid)
       window.location='/'+message+'/'+fid
     }
     const handleMenuExit=()=>{
+      localStorage.removeItem('user');
       window.location='/logout'
     }
     const handleMenuChange=()=>{

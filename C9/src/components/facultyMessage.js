@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom'
 import * as React from 'react'
 import Downloader from 'react-base64-downloader'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import NotAuth from './notAvailable';
+var CryptoJS = require("crypto-js");
+
 
 // const msgs = [
 //     {
@@ -47,6 +50,8 @@ const Facultymsg = () => {
 
     var { id } = useParams()
     const [msgs, setMsgs] = React.useState(null)
+    const [local,setLocal]=React.useState(localStorage.getItem('user')||null)
+    const [auth,setAuth]=React.useState(0)
 
     async function getstudents() {
         fetch(`http://localhost:4000/msgstudent/retrieve?fid=${id}`)
@@ -56,6 +61,22 @@ const Facultymsg = () => {
     }
     React.useEffect(() => {
         getstudents()
+        async function authfn() {
+            if(local){
+            const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
+            const json = await response.json()
+            // console.log(json.data[0])
+            var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
+            var decr = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            // console.log(decr[0].pass===json.data[0].S_Password)
+            var v=decr[0].uname===json.data[0].F_Username&&decr[0].pass===json.data[0].F_Password?1:0
+            setAuth(v)}
+    
+    
+      
+          }
+        authfn()
+
     }, [])
 
     const handleAck=(mid)=>{
@@ -66,7 +87,10 @@ const Facultymsg = () => {
     }
 
     return (
-        <div>
+        <div>{auth===0?(<div>
+            <NotAuth/>
+          </div>):
+        (<div>
             <ReactFontLoader url='https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap' />
             <NavBar message={"faculty"} fid={id}/>
             <h4 style={{ marginLeft: '4vw', marginTop: '5vh' }}><u>MESSAGE HISTORY</u></h4>
@@ -105,6 +129,7 @@ const Facultymsg = () => {
                     }
                 </div>)}
             </div>
+        </div>)}
         </div>
     );
 }

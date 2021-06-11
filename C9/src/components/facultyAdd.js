@@ -18,12 +18,17 @@ const FacultyAdd = ({setFunc}) => {
     const [username, setUsername] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [dept, setDept] = React.useState('')
+    const [mail, setMail] = React.useState('')
    
     const submitHandler=(e)=>{
         e.preventDefault()
         console.log(id)
         fetch(`http://localhost:4000/faculties/add?id=${id}&name=${name}&username=${username}&password=${pass}&department=${dept}`)
         .then(response=>response.json())
+        .catch(err=>console.error(err))
+
+        fetch(`http://localhost:4000/faculties/add/mail?id=${id}&mail=${mail}`)
+        // .then(response=>response.json())
         .catch(err=>console.error(err))
         }
         
@@ -52,6 +57,10 @@ const FacultyAdd = ({setFunc}) => {
             setDept(event.target.value);
         }
 
+        const handleChangeMail=(event)=>{
+            setMail(event.target.value);
+        }
+
     return (
     <div>
      <Navbar />
@@ -63,11 +72,15 @@ const FacultyAdd = ({setFunc}) => {
          <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%'}}>
          <div className="form-group">
                 <label className="login-form-label">Facuty Id</label>
-                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="Facuty Id"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={id} onChange={handleChangeRno} placeholder="F01"></input>
             </div>
             <div className="form-group">
                 <label className="login-form-label">Faculty Name</label>
                 <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={name} onChange={handleChangeName} placeholder="Faculty Name"></input>
+            </div>
+            <div className="form-group">
+                <label className="login-form-label">Faculty Email</label>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={mail} onChange={handleChangeMail} placeholder="abc@gmail.com"></input>
             </div>          
             <div className="form-group">
                 <label className="login-form-label">Faculty Username</label>
@@ -79,7 +92,7 @@ const FacultyAdd = ({setFunc}) => {
             </div>
             <div className="form-group">
                 <label className="login-form-label">Department</label>
-                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="Department"></input>
+                <input type="text" style={{textAlign:'center'}} className="form-control login-form-input" value={dept} onChange={handleChangeDept} placeholder="CSE"></input>
             </div>
             </div>
             {/* <p>{id}</p>
