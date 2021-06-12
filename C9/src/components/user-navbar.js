@@ -70,7 +70,7 @@ const NavBar = ({ message, fid }) => {
     await fetch(`http://34.136.140.158:4000/${message}/modifymail?id=${fid}&mail=${mail}`)
       .then(response => response.json())
       .catch(err => console.error(err))
-    // handleClose()  
+    handleClose()  
   }
   fn()
 }
