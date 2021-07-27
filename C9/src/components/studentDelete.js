@@ -27,7 +27,7 @@ const columns = [
 const StudentDelete = ({ Students }) => {
     const [students, setStudents] = React.useState(Students);
         async function getstudents(){
-          fetch("http://34.136.140.158:4000/students")
+          fetch("http://localhost:4000/students")
           .then(response=>response.json())
           .then(response=>setStudents(response.data))
           .catch(err=>console.error(err))
@@ -48,7 +48,7 @@ const StudentDelete = ({ Students }) => {
     const handleDelete=()=>{
         console.log(rowind) 
         console.log(rows[rowind].id)       
-        fetch(`http://34.136.140.158:4000/students/delete?id=${rows[rowind].id}`)
+        fetch(`http://localhost:4000/students/delete?id=${rows[rowind].id}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))    
     }

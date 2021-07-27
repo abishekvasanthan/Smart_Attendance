@@ -27,7 +27,7 @@ const FacultyHome = () => {
 
   React.useEffect(() => {
     async function fn() {
-      const response = await fetch(`http://34.136.140.158:4000/faculty/home/graph?fid=${id}`)
+      const response = await fetch(`http://localhost:4000/faculty/home/graph?fid=${id}`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)']]
       for (var i = 0; i < json.data.length; i++) {
@@ -38,7 +38,7 @@ const FacultyHome = () => {
 
     async function authfn() {
       if(local){
-      const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
+      const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
       const json = await response.json()
       // console.log(json)
       var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -52,13 +52,13 @@ const FacultyHome = () => {
 
     }
 
-    fetch(`http://34.136.140.158:4000/faculty/home?fid=${id}`)
+    fetch(`http://localhost:4000/faculty/home?fid=${id}`)
           .then(response=>response.json())
           .then(response=>setFn(response.data))
           .catch(err=>console.error(err))
 
     async function fn1() {
-      const response = await fetch(`http://34.136.140.158:4000/faculty/stats`)
+      const response = await fetch(`http://localhost:4000/faculty/stats`)
       const json = await response.json()
       var arr = []
       if(json.data.length!==0){

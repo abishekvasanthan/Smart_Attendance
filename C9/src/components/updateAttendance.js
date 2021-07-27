@@ -24,7 +24,7 @@ const UpdateAttendance = () => {
 
         async function authfn() {
             if (local) {
-                const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
+                const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
                 const json = await response.json()
                 // console.log(json.data[0])
                 var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -47,11 +47,11 @@ const UpdateAttendance = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch(`http://34.136.140.158:4000/updateattend/od?sid=${sid}&fid=${id}&cid=${cid}&date=${date}`)
+        fetch(`http://localhost:4000/updateattend/od?sid=${sid}&fid=${id}&cid=${cid}&date=${date}`)
             .then(response => response.json())
             .catch(err => console.error(err))
 
-        fetch(`http://34.136.140.158:4000/updateattendance/od?sid=${sid}&fid=${id}&cid=${cid}`)
+        fetch(`http://localhost:4000/updateattendance/od?sid=${sid}&fid=${id}&cid=${cid}`)
             .then(response => response.json())
             .catch(err => console.error(err))
     }

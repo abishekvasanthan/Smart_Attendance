@@ -108,7 +108,7 @@ const Homemain = () => {
   const studentSubmitHandler = (e) => {
     e.preventDefault();
     setAccord(0)
-    fetch(`http://34.136.140.158:4000/students/login?uname=${uname}&pass=${pass}`)
+    fetch(`http://localhost:4000/students/login?uname=${uname}&pass=${pass}`)
       .then(response => response.json())
       .then(response => {
         if (response.data.length === 0) {
@@ -150,7 +150,7 @@ const Homemain = () => {
   const facultySubmitHandler = (e) => {
     e.preventDefault();
     setAccord(0)
-    fetch(`http://34.136.140.158:4000/faculties/login?uname=${uname}&pass=${pass}`)
+    fetch(`http://localhost:4000/faculties/login?uname=${uname}&pass=${pass}`)
       .then(response => response.json())
       .then(response => {
         if (response.data.length === 0) {

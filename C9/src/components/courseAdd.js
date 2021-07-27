@@ -20,7 +20,7 @@ const AdminAdd = ({setFunc}) => {
    
     const submitHandler=(e)=>{
         e.preventDefault()
-        fetch(`http://34.136.140.158:4000/courses/add?id=${id}&name=${name}&semester=${sem}&type=${type}`)
+        fetch(`http://localhost:4000/courses/add?id=${id}&name=${name}&semester=${sem}&type=${type}`)
         .then(response=>response.json())
         .catch(err=>console.error(err))
 

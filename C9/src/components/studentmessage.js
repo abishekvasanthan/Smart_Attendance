@@ -68,7 +68,7 @@ const Studentmsg = () => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        fetch(`http://34.136.140.158:4000/msg/post`,
+        fetch(`http://localhost:4000/msg/post`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -99,11 +99,11 @@ const Studentmsg = () => {
     }
 
     async function getstudents() {
-        fetch(`http://34.136.140.158:4000/student/retrievemsg?sid=${id}`)
+        fetch(`http://localhost:4000/student/retrievemsg?sid=${id}`)
             .then(response => response.json())
             .then(response => setMsgs(response.data))
             .catch(err => console.error(err))
-        fetch(`http://34.136.140.158:4000/msgfaculty/retrieve?sid=${id}`)
+        fetch(`http://localhost:4000/msgfaculty/retrieve?sid=${id}`)
             .then(response => response.json())
             .then(response => setFaculty(response.data))
             .catch(err => console.error(err))
@@ -112,7 +112,7 @@ const Studentmsg = () => {
         getstudents()
         async function authfn() {
             if(local){
-            const response = await fetch(`http://34.136.140.158:4000/students/auth?id=${id}`)
+            const response = await fetch(`http://localhost:4000/students/auth?id=${id}`)
             const json = await response.json()
             console.log(json.data[0])
             var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');

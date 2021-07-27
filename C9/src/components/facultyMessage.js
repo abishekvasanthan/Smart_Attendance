@@ -54,7 +54,7 @@ const Facultymsg = () => {
     const [auth,setAuth]=React.useState(0)
 
     async function getstudents() {
-        fetch(`http://34.136.140.158:4000/msgstudent/retrieve?fid=${id}`)
+        fetch(`http://localhost:4000/msgstudent/retrieve?fid=${id}`)
             .then(response => response.json())
             .then(response => setMsgs(response.data))
             .catch(err => console.error(err))
@@ -63,7 +63,7 @@ const Facultymsg = () => {
         getstudents()
         async function authfn() {
             if(local){
-            const response = await fetch(`http://34.136.140.158:4000/faculties/auth?id=${id}`)
+            const response = await fetch(`http://localhost:4000/faculties/auth?id=${id}`)
             const json = await response.json()
             // console.log(json.data[0])
             var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -81,7 +81,7 @@ const Facultymsg = () => {
 
     const handleAck=(mid)=>{
         console.log(mid)
-        fetch(`http://34.136.140.158:4000/msg/ack?fid=${mid}`)
+        fetch(`http://localhost:4000/msg/ack?fid=${mid}`)
             .catch(err => console.error(err))
             window.location.reload()
     }

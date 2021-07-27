@@ -24,14 +24,14 @@ const StudentHome = () => {
 
 
   React.useEffect(() => {
-    fetch(`http://34.136.140.158:4000/student/home?sid=${id}`)
+    fetch(`http://localhost:4000/student/home?sid=${id}`)
       .then(response => response.json())
       .then(response => setName(response.data))
       .catch(err => console.error(err))
 
       async function authfn() {
         if(local){
-        const response = await fetch(`http://34.136.140.158:4000/students/auth?id=${id}`)
+        const response = await fetch(`http://localhost:4000/students/auth?id=${id}`)
         const json = await response.json()
         console.log(json.data[0])
         var bytes = CryptoJS.AES.decrypt(local, 'my-secret-key@123');
@@ -45,7 +45,7 @@ const StudentHome = () => {
       }
 
       async function fn() {
-      const response = await fetch(`http://34.136.140.158:4000/student/home/graph?fid=${id}`)
+      const response = await fetch(`http://localhost:4000/student/home/graph?fid=${id}`)
       const json = await response.json()
       const arr = [['Course', 'Avg(Attendance)',{ role: 'style' }]]
       for (var i = 0; i < json.data.length; i++) {
